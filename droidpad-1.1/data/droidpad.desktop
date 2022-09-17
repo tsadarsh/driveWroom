@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=DroidPad
+Comment=Use your Android phone as a joystick or mouse
+Exec=gksu -D "DroidPad" droidpad
+Icon=droidpad
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Utility

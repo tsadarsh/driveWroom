@@ -1,0 +1,7 @@
+src/droidpad.cpp
+src/mainwin.cpp
+src/wthread.cpp
+src/statfuncs.cpp
+src/infoDecoder.cpp
+data/layouts.glade
+data/droidpad.desktop.in

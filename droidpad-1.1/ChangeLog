@@ -1,0 +1,12 @@
+2010-06-10  Will Shackleton <w.shackleton@gmail.com>
+
+	* Initial stable release
+	* Added configuration support
+	* Started writing a ChangeLog!
+
+2010-03-31  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (ACLOCAL_AMFLAGS): New variable.
+	(EXTRA_DIST): Add config.rpath, m4/ChangeLog.
+	* configure.ac (AC_CONFIG_FILES): Add po/Makefile.in.
+

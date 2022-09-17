@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: droidpad 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-09 20:03+0100\n"
+"PO-Revision-Date: 2010-04-01 13:13+0100\n"
+"Last-Translator: William Shackleton <w.shackleton@gmail.com>\n"
+"Language-Team: Team <w.shackleton@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/droidpad.cpp:48
+msgid "Please run DroidPad as root."
+msgstr ""
+
+#: ../src/droidpad.cpp:49
+msgid ""
+"DroidPad needs to be run as 'root' (Administrator) to operate correctly."
+msgstr ""
+
+#: ../src/droidpad.cpp:60
+msgid "Searching for layouts in \"%1\" ..."
+msgstr ""
+
+#: ../src/droidpad.cpp:77
+msgid "Layouts found!"
+msgstr ""
+
+#: ../src/droidpad.cpp:85
+msgid "Data files can't be found, exiting."
+msgstr ""
+
+#: ../src/droidpad.cpp:107
+msgid "A fatal error has occured!"
+msgstr ""
+
+#: ../src/droidpad.cpp:108
+msgid ""
+"DroidPad has crashed!\n"
+"Error: Segmentation Fault"
+msgstr ""
+
+#: ../src/mainwin.cpp:38 ../data/droidpad.desktop.in.h:1
+msgid "DroidPad"
+msgstr ""
+
+#: ../src/mainwin.cpp:42
+msgid "DroidPad - Layouts corrupted!!!"
+msgstr "DroidPad - Layouts sont corrompu."
+
+#: ../src/mainwin.cpp:183
+#, fuzzy
+msgid "Started!"
+msgstr "Commencer"
+
+#: ../src/mainwin.cpp:198
+msgid "Error connecting to phone"
+msgstr ""
+
+#: ../src/mainwin.cpp:199
+msgid ""
+"Perhaps DroidPad is not running on your phone, or you have typed in the "
+"wrong IP address?"
+msgstr ""
+
+#: ../src/mainwin.cpp:200
+msgid "Error creating connection"
+msgstr ""
+
+#: ../src/mainwin.cpp:201
+msgid "An unknown error occurred while connecting to the phone"
+msgstr ""
+
+#: ../src/wthread.cpp:103 ../src/wthread.cpp:168
+msgid "Connection lost."
+msgstr ""
+
+#: ../data/layouts.glade.h:1
+msgid ""
+"&#xA9; 2010 Will Shackleton\n"
+"digitalsquid.co.uk"
+msgstr ""
+
+#: ../data/layouts.glade.h:3
+msgid "3141"
+msgstr ""
+
+#: ../data/layouts.glade.h:4
+msgid "<b>Configuration</b>"
+msgstr "<b>Configuration</b>"
+
+#: ../data/layouts.glade.h:5
+msgid "<b>Status</b>"
+msgstr "<b>Statut</b>"
+
+#: ../data/layouts.glade.h:6
+msgid "About DroidPad"
+msgstr ""
+
+#. IP Address, probably no need to translate.
+#: ../data/layouts.glade.h:8
+msgid "IP:"
+msgstr ""
+
+#. Status message
+#: ../data/layouts.glade.h:10
+msgid "Not Connected"
+msgstr "Pas connecté"
+
+#: ../data/layouts.glade.h:11
+msgid "Port"
+msgstr ""
+
+#: ../data/layouts.glade.h:12
+msgid "Refresh"
+msgstr "Rafrachir"
+
+#. [verb], menu item
+#: ../data/layouts.glade.h:14
+#, fuzzy
+msgid "S_top"
+msgstr "Arrête"
+
+#: ../data/layouts.glade.h:15
+msgid "Start"
+msgstr "Commencer"
+
+#: ../data/layouts.glade.h:16
+msgid "Status:"
+msgstr "Statut:"
+
+#: ../data/layouts.glade.h:17
+msgid "Status: "
+msgstr "Statut: "
+
+#: ../data/layouts.glade.h:18
+msgid "Stop"
+msgstr "Arrête"
+
+#: ../data/layouts.glade.h:19
+msgid ""
+"This program is free software: you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation, either version 3 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+
+#. [USB interface], probably the same in most languages.
+#: ../data/layouts.glade.h:32
+msgid "USB"
+msgstr ""
+
+#: ../data/layouts.glade.h:33
+msgid "Use your Android phone as a joystick and mouse."
+msgstr ""
+
+#. [Wireless Interface], Probably the same in most languages
+#: ../data/layouts.glade.h:35
+msgid "Wifi"
+msgstr ""
+
+#. Position axis (X & Y)
+#: ../data/layouts.glade.h:37
+msgid "X"
+msgstr ""
+
+#. Position axis (X & Y)
+#: ../data/layouts.glade.h:39
+msgid "Y"
+msgstr ""
+
+#: ../data/layouts.glade.h:40
+msgid "_File"
+msgstr ""
+
+#: ../data/layouts.glade.h:41
+msgid "_Help"
+msgstr ""
+
+#. [verb], menu item
+#: ../data/layouts.glade.h:43
+#, fuzzy
+msgid "_Start"
+msgstr "Commencer"
+
+#: ../data/layouts.glade.h:44
+msgid "digitalsquid.co.uk/droidpad"
+msgstr ""
+
+#: ../data/droidpad.desktop.in.h:2
+msgid "Use your Android phone as a joystick or mouse"
+msgstr ""
