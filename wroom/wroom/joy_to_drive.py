@@ -4,6 +4,7 @@ import struct
 import rclpy
 from rclpy.node import Node
 from numpy import interp
+import numpy as np
 
 from std_msgs.msg import Int16
 from sensor_msgs.msg import Joy
@@ -33,6 +34,17 @@ class JoySubscriber(Node):
 		except:
 			self.get_logger().info("Serial COM unsuccessful")
 
+	def bezier_interp(self, x, limits, delta):
+		reverse, neutral, forward = np.array([
+			[-2, limits[0]],
+			[0, (sum(limits)/len(limits)) + delta],
+			[2, limits[1]]
+			])
+		P = lambda t: (1-t)**2 * reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
+		return P(x)
+
+
+
 
 	def listener_callback(self, joy):
 		#self.calculate_alpha_beta(-joy.axes[0], joy.axes[1])
@@ -41,9 +53,9 @@ class JoySubscriber(Node):
 	def simple_alpha_beta(self, x, y, max_speed):
 		alpha = y+x
 		beta = y-x
-		p = interp(max_speed, [-1,1], [1, 63])
-		alpha_lerp = interp(alpha, [-2,2], [64+p, 64-p])
-		beta_lerp = interp(beta, [-2, 2], [191.5-p, 191.5+p])
+		xp = interp(max_speed, [-1,1], [-10,10])
+		alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
+		beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
 		self.publish_serial(alpha_lerp, beta_lerp)
 
 	def harmonic_alpha_beta(alpha, beta):
