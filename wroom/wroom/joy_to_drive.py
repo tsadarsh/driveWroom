@@ -3,6 +3,7 @@ import serial
 import struct
 import rclpy
 from rclpy.node import Node
+from numpy import interp
 
 from std_msgs.msg import Int16
 from sensor_msgs.msg import Joy
@@ -65,13 +66,14 @@ class JoySubscriber(Node):
 		elif x > 0 and y < 0:
 			alpha = -(sqrt(x**2 + y**2))
 			beta = -((y**2 - x**2)/(y**2 + x**2))
-			
+
 		else:
 			self.get_logger().info(f"unmapped data: {x}, {y}")
 		self.get_logger().info(f'data: {alpha}, {beta}')
 		if self.ser:
-			alpha_lerp = lerp(alpha, -1, 1, 1, 127)
-			beta_lerp = lerp(beta, -1, 1, 128, 255)
+			xp, yp = [1, 127], [128, 255]
+			alpha_lerp = interp(alpha, [-1, 1], xp)
+			beta_lerp = interp(beta, [-1, 1], yp)
 			self.ser.write(struct.pack('>B', int(alpha_lerp)))
 			self.ser.write(struct.pack('>B', int(beta_lerp)))
 
