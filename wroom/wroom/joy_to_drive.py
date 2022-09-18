@@ -51,25 +51,29 @@ class JoySubscriber(Node):
 			# Quad 1
 			alpha = sqrt(x**2 + y**2)
 			beta = (y**2 - x**2)/(y**2 + x**2)
+
 		elif x < 0 and y > 0:
 			# Quad 2
 			alpha = (y**2 - x**2)/(y**2 + x**2)
 			beta = sqrt(x**2 + y**2)
+
 		elif x < 0 and y < 0:
 			# Quad 3
 			alpha = -((y**2 - x**2)/(y**2 + x**2))
 			beta = -(sqrt(x**2 + y**2))
+
 		elif x > 0 and y < 0:
 			alpha = -(sqrt(x**2 + y**2))
 			beta = -((y**2 - x**2)/(y**2 + x**2))
+			
 		else:
 			self.get_logger().info(f"unmapped data: {x}, {y}")
 		self.get_logger().info(f'data: {alpha}, {beta}')
 		if self.ser:
 			alpha_lerp = lerp(alpha, -1, 1, 1, 127)
-			beta_lerp = lerp(betam -1, 1, 128, 255)
-			self.ser.write(struct.pack('>B', alpha_lerp))
-			self.ser.write(struct.pack('>B', beta_lerp))
+			beta_lerp = lerp(beta, -1, 1, 128, 255)
+			self.ser.write(struct.pack('>B', int(alpha_lerp)))
+			self.ser.write(struct.pack('>B', int(beta_lerp)))
 
 def main(args=None):
 	rclpy.init(args=args)
