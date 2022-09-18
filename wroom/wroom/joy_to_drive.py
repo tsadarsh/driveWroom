@@ -43,6 +43,14 @@ class JoySubscriber(Node):
 		P = lambda t: (1-t)**2 * reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
 		return P(x)
 
+	def lazy_ramp(self, x, y, acc):
+		alpha = y + x
+		beta = y - x
+		alpha_unit = interp(alpha, [-2, 2], [-1, 1])
+		beta_unit = interp(beta, [-2, 2], [-1, 1])
+		acc = interp(acc, [-1, 1], [1, 10])
+		alpha_final = alpha ** acc
+		self.publish_serial(alpha_final, beta_unit)
 
 
 
@@ -54,6 +62,7 @@ class JoySubscriber(Node):
 		alpha = y+x
 		beta = y-x
 		xp = interp(max_speed, [-1,1], [-10,10])
+		self.get_logger.info(f"{xp}")
 		alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
 		beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
 		self.publish_serial(alpha_lerp, beta_lerp)
@@ -64,7 +73,7 @@ class JoySubscriber(Node):
 			beta_lerp = interp(beta, [-1, 1], yp)
 			self.publish_serial(alpha_lerp, beta_lerp)
 
-	def calculate_alpha_beta(self, x, y):
+	def calculate_alpha_beta(self, x, y, delta):
 		if x==0 and y==0:
 			# joystick in home position
 			alpha, beta = 0, 0
@@ -99,7 +108,7 @@ class JoySubscriber(Node):
 		self.get_logger().info(f'data: {alpha}, {beta}')
 
 		if self.ser:
-			self.simple_alpha_beta(alpha, beta)
+			self.lazy_ramp(alpha, beta)
 
 	def publish_serial(self, alpha, beta):
 		self.ser.write(struct.pack('>B', int(alpha)))
