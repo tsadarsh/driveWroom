@@ -36,13 +36,14 @@ class JoySubscriber(Node):
 
 	def listener_callback(self, joy):
 		#self.calculate_alpha_beta(-joy.axes[0], joy.axes[1])
-		self.simple_alpha_beta(-joy.axes[0], joy.axes[1])
+		self.simple_alpha_beta(-joy.axes[0], joy.axes[1], joy.axes[3])
 
-	def simple_alpha_beta(self, x, y):
-		alpha = y-x
-		beta = y+x
-		alpha_lerp = interp(alpha, [-2,2], [1, 127])
-		beta_lerp = interp(beta, [-2, 2], [128, 255])
+	def simple_alpha_beta(self, x, y, max_speed):
+		alpha = y+x
+		beta = y-x
+		p = interp(max_speed, [-1,1], [1, 63])
+		alpha_lerp = interp(alpha, [-2,2], [64+p, 64-p])
+		beta_lerp = interp(beta, [-2, 2], [191.5-p, 191.5+p])
 		self.publish_serial(alpha_lerp, beta_lerp)
 
 	def harmonic_alpha_beta(alpha, beta):
