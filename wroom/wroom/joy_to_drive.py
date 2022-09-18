@@ -33,10 +33,11 @@ class JoySubscriber(Node):
         except:
             self.get_logger().info("Serial COM unsuccessful")
 
-    def bezier_interp(self, x, limits, delta):
+    def bezier_interp(self, x, xlim, limits, delta):
         reverse, neutral, forward = np.array(
-            [[-2, limits[0]], [0, (sum(limits) / len(limits)) + delta],
-             [2, limits[1]]])
+            [[xlim[0], limits[0]],
+             [sum(xlim) / 2, (sum(limits) / len(limits)) + delta],
+             [xlim[1], limits[1]]])
 
         def P(t):            return (1-t)**2 * \
 reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
@@ -52,9 +53,10 @@ reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
         beta = y - x
         xp = interp(max_speed, [-1, 1], [-10, 10])
         if alpha <= 0:
-            alpha_lerp = self.bezier_interp(alpha, [1, 63], max_speed)
+            alpha_lerp = self.bezier_interp(alpha, [-2, 0], [1, 63], max_speed)
         else:
-            alpha_lerp = self.bezier_interp(alpha, [63, 127], max_speed)
+            alpha_lerp = self.bezier_interp(alpha, [0, 2], [63, 127],
+                                            max_speed)
 
         if beta <= 0:
             beta_lerp = self.bezier_interp(beta, [128, 192], max_speed)
