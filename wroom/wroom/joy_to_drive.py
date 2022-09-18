@@ -11,7 +11,7 @@ from sensor_msgs.msg import Joy
 
 
 def lerp(x, min_in, max_in, min_out, max_out):
-    return min_out + (x - min_in) * (max_out-min_out)/(max_in-min_in)
+    return min_out + (x - min_in) * (max_out - min_out) / (max_in - min_in)
 
 
 class JoySubscriber(Node):
@@ -20,11 +20,9 @@ class JoySubscriber(Node):
         super().__init__('joy_subscriber')
         self.ser = 0
         self.start_serial()
-        self.subscription = self.create_subscription(
-            Joy,
-            'joy',
-            self.listener_callback,
-            10)
+        self.subscription = self.create_subscription(Joy, 'joy',
+                                                     self.listener_callback,
+                                                     10)
         self.subscription
 
     def start_serial(self):
@@ -36,14 +34,13 @@ class JoySubscriber(Node):
             self.get_logger().info("Serial COM unsuccessful")
 
     def bezier_interp(self, x, limits, delta):
-        reverse, neutral, forward = np.array([
-            [-2, limits[0]],
-            [0, (sum(limits)/len(limits)) + delta],
-            [2, limits[1]]
-        ])
+        reverse, neutral, forward = np.array(
+            [[-2, limits[0]], [0, (sum(limits) / len(limits)) + delta],
+             [2, limits[1]]])
 
-        def P(t): return (1-t)**2 * \
-            reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
+        def P(t):            return (1-t)**2 * \
+reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
+
         return P(x)
 
     def listener_callback(self, joy):
@@ -51,20 +48,20 @@ class JoySubscriber(Node):
         self.simple_alpha_beta(-joy.axes[0], joy.axes[1], joy.axes[3])
 
     def simple_alpha_beta(self, x, y, max_speed):
-        alpha = y+x
-        beta = y-x
+        alpha = y + x
+        beta = y - x
         xp = interp(max_speed, [-1, 1], [-10, 10])
-    if alpha <= 0:
-        alpha_lerp = self.bezier_interp(alpha, [1, 63], max_speed)
-    else:
-        alpha_lerp = self.bezier_interp(alpha, [63, 127], max_speed)
+        if alpha <= 0:
+            alpha_lerp = self.bezier_interp(alpha, [1, 63], max_speed)
+        else:
+            alpha_lerp = self.bezier_interp(alpha, [63, 127], max_speed)
 
-    if beta <= 0:
-        beta_lerp = self.bezier_interp(beta, [128, 192], max_speed)
-    else:
-        beta_lerp = self.bezier_interp(beta, [193, 255], max_speed)
-        #  alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
-        #  beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
+        if beta <= 0:
+            beta_lerp = self.bezier_interp(beta, [128, 192], max_speed)
+        else:
+            beta_lerp = self.bezier_interp(beta, [193, 255], max_speed)
+            #  alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
+            #  beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
         self.publish_serial(alpha_lerp, beta_lerp)
 
     def harmonic_alpha_beta(alpha, beta):
@@ -87,21 +84,21 @@ class JoySubscriber(Node):
         elif x > 0 and y > 0:
             # Quad 1
             alpha = sqrt(x**2 + y**2)
-            beta = (y**2 - x**2)/(y**2 + x**2)
+            beta = (y**2 - x**2) / (y**2 + x**2)
 
         elif x < 0 and y > 0:
             # Quad 2
-            alpha = (y**2 - x**2)/(y**2 + x**2)
+            alpha = (y**2 - x**2) / (y**2 + x**2)
             beta = sqrt(x**2 + y**2)
 
         elif x < 0 and y < 0:
             # Quad 3
-            alpha = -((y**2 - x**2)/(y**2 + x**2))
+            alpha = -((y**2 - x**2) / (y**2 + x**2))
             beta = -(sqrt(x**2 + y**2))
 
         elif x > 0 and y < 0:
             alpha = -(sqrt(x**2 + y**2))
-            beta = -((y**2 - x**2)/(y**2 + x**2))
+            beta = -((y**2 - x**2) / (y**2 + x**2))
 
         else:
             self.get_logger().info(f"unmapped data: {x}, {y}")
