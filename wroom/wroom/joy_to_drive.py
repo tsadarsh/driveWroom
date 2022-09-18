@@ -35,7 +35,21 @@ class JoySubscriber(Node):
 
 
 	def listener_callback(self, joy):
-		self.calculate_alpha_beta(-joy.axes[0], joy.axes[1])
+		#self.calculate_alpha_beta(-joy.axes[0], joy.axes[1])
+		self.simple_alpha_beta(-joy.axes[0], joy.axes[1])
+
+	def simple_alpha_beta(self, x, y):
+		alpha = y-x
+		beta = y+x
+		alpha_lerp = interp(alpha, [-2,2], [1, 127])
+		beta_lerp = interp(beta, [-2, 2], [128, 255])
+		self.publish_serial(alpha_lerp, beta_lerp)
+
+	def harmonic_alpha_beta(alpha, beta):
+			xp, yp = [1, 127], [128, 255]
+			alpha_lerp = interp(alpha, [-1, 1], xp)
+			beta_lerp = interp(beta, [-1, 1], yp)
+			self.publish_serial(alpha_lerp, beta_lerp)
 
 	def calculate_alpha_beta(self, x, y):
 		if x==0 and y==0:
@@ -70,12 +84,14 @@ class JoySubscriber(Node):
 		else:
 			self.get_logger().info(f"unmapped data: {x}, {y}")
 		self.get_logger().info(f'data: {alpha}, {beta}')
+
 		if self.ser:
-			xp, yp = [1, 127], [128, 255]
-			alpha_lerp = interp(alpha, [-1, 1], xp)
-			beta_lerp = interp(beta, [-1, 1], yp)
-			self.ser.write(struct.pack('>B', int(alpha_lerp)))
-			self.ser.write(struct.pack('>B', int(beta_lerp)))
+			self.simple_alpha_beta(alpha, beta)
+
+	def publish_serial(alpha, beta):
+		self.ser.write(struct.pack('>B', int(alpha)))
+		self.ser.write(struct.pack('>B', int(beta)))
+		self.get_logger().info(f'data: {alpha}, {beta}')
 
 def main(args=None):
 	rclpy.init(args=args)
