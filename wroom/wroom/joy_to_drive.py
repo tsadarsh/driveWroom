@@ -59,9 +59,10 @@ reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
                                             max_speed)
 
         if beta <= 0:
-            beta_lerp = self.bezier_interp(beta, [128, 192], max_speed)
+            beta_lerp = self.bezier_interp(beta, [-2, 0], [128, 192],
+                                           max_speed)
         else:
-            beta_lerp = self.bezier_interp(beta, [193, 255], max_speed)
+            beta_lerp = self.bezier_interp(beta, [0, 2], [193, 255], max_speed)
             #  alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
             #  beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
         self.publish_serial(alpha_lerp, beta_lerp)
