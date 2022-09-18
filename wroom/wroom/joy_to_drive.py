@@ -88,7 +88,7 @@ class JoySubscriber(Node):
 		if self.ser:
 			self.simple_alpha_beta(alpha, beta)
 
-	def publish_serial(alpha, beta):
+	def publish_serial(self, alpha, beta):
 		self.ser.write(struct.pack('>B', int(alpha)))
 		self.ser.write(struct.pack('>B', int(beta)))
 		self.get_logger().info(f'data: {alpha}, {beta}')
