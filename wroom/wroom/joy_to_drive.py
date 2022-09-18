@@ -56,13 +56,12 @@ class JoySubscriber(Node):
 
 	def listener_callback(self, joy):
 		#self.calculate_alpha_beta(-joy.axes[0], joy.axes[1])
-		self.simple_alpha_beta(-joy.axes[0], joy.axes[1], joy.axes[3])
+		self.lazy_ramp(-joy.axes[0], joy.axes[1], joy.axes[3])
 
 	def simple_alpha_beta(self, x, y, max_speed):
 		alpha = y+x
 		beta = y-x
 		xp = interp(max_speed, [-1,1], [-10,10])
-		self.get_logger.info(f"{xp}")
 		alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
 		beta_lerp = self.bezier_interp(beta, [128, 255], max_speed)
 		self.publish_serial(alpha_lerp, beta_lerp)
