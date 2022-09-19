@@ -3,7 +3,7 @@ from numpy import interp
 import numpy as np
 
 
-def simple_alpha_beta(self, joy):
+def simple_alpha_beta(joy):
 	x = joy.axes[0]
 	y = joy.axes[1]
 

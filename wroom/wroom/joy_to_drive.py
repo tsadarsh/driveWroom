@@ -3,14 +3,13 @@ import serial
 import struct
 import rclpy
 from rclpy.node import Node
-import os
-print(os.getcwd())
+
 # ROS messages imports
-from wroom.msg import sabertooth_simplified_serial as sss
+from wroom_msgs.msg import SabertoothSerial as sss
 from sensor_msgs.msg import Joy
 
 # Local imports
-import DRIVE_TRANSFORM_INTERPOLATE as DTI
+import wroom.DRIVE_TRANSFORM_INTERPOLATE as DTI
 
 
 class JoyToDrive(Node):
@@ -20,11 +19,11 @@ class JoyToDrive(Node):
 	"""
 
 	def __init__(self):
-		motor_cmd = [] # unit8 array
+		self.motor_cmd = [] # unit8 array
 
 		super().__init__ ('joy_subscriber')
 		self.ser = 0
-		self.start_serial()
+		#self.start_serial()
 		self.subscription = self.create_subscription(
 			Joy,
 			'joy',
@@ -40,7 +39,7 @@ class JoyToDrive(Node):
 	def DTI_caller(self, joy):
 		"""Sends joy input to DTI and logs returned values"""
 		motor_cmd = DTI.simple_alpha_beta(joy)
-		self.get_logger().info("{motor_cmd}")
+		self.get_logger().info(f"{motor_cmd}")
 
 	def timer_callback(self):
 		msg = sss()
@@ -72,7 +71,7 @@ class JoyToDrive(Node):
 def main(args=None):
 	rclpy.init(args=args)
 
-	joy_subscriber = JoySubscriber()
+	joy_subscriber = JoyToDrive()
 	#motor_driver_cmd = MotorDriverCMD()
 
 	rclpy.spin(joy_subscriber)
