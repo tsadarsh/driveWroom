@@ -28,7 +28,7 @@ class SendToMotorDriver(Node):
 		try:
 			port = serial.Serial('/dev/ttyTHS1', baudrate=9600)
 			self.get_logger().info("Serial communication established on Port 1")
-			return port_1
+			return port
 
 		except serial.serialutil.SerialException:
 			self.get_logger().warn(f"Could not establish serial comm in {addr}")
