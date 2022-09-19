@@ -39,7 +39,7 @@ class JoyToDrive(Node):
 
 	def DTI_caller(self, joy):
 		"""Sends joy input to DTI and logs returned values"""
-		motor_cmd = DTI.simple_alpha_beta(joy)
+		motor_cmd = DTI.affine_tranform(joy)
 		self.get_logger().info("{motor_cmd}")
 
 	def timer_callback(self):
