@@ -1,7 +1,6 @@
 import numpy as np
 
 # Generic ROS imports
-import serial
 import struct
 import rclpy
 from rclpy.node import Node
@@ -23,7 +22,7 @@ class JoyToDrive(Node):
 	def __init__(self):
 		self.motor_cmd = [] # unit8 array
 
-		super().__init__ ('joy_subscriber')
+		super().__init__('joy_to_drive')
 		self.ser = 0
 		#self.start_serial()
 		self.subscription = self.create_subscription(
