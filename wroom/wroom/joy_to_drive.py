@@ -1,3 +1,5 @@
+import numpy as np
+
 # Generic ROS imports
 import serial
 import struct
@@ -38,8 +40,8 @@ class JoyToDrive(Node):
 
 	def DTI_caller(self, joy):
 		"""Sends joy input to DTI and logs returned values"""
-		motor_cmd = DTI.affine_tranform(joy)
-		self.get_logger().info(f"{motor_cmd}")
+		self.motor_cmd = DTI.affine_tranform(joy)
+		self.get_logger().info(f"{self.motor_cmd}")
 
 	def timer_callback(self):
 		msg = sss()
