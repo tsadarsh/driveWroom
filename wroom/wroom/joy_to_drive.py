@@ -36,11 +36,12 @@ class JoySubscriber(Node):
     def bezier_interp(self, x, xlim, limits, delta):
         reverse, neutral, forward = np.array(
             [[xlim[0], limits[0]],
-             [sum(xlim) / 2, (sum(limits) / len(limits)) + delta],
+             [sum(xlim) / len(limits), (sum(limits) / len(limits)) + delta],
              [xlim[1], limits[1]]])
 
-        def P(t):            return (1-t)**2 * \
-reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
+        def P(t):
+            return (1 - t)**2 * reverse[1] + 2 * t * (
+                1 - t) * neutral[1] + t**2 * forward[1]
 
         return P(x)
 
@@ -51,20 +52,22 @@ reverse[1] + 2*t*(1-t) * neutral[1] + t**2 * forward[1]
     def simple_alpha_beta(self, x, y, max_speed):
         alpha = y + x
         beta = y - x
-        xp = interp(max_speed, [-1, 1], [-20, 20])
+        #  xp = interp(max_speed, [-1, 1], [-20, 20])
         if alpha < 0:
-            alpha_lerp = self.bezier_interp(alpha, [-2, 0], [1, 63], max_speed)
+            alpha_lerp = self.bezier_interp(alpha, [-2, 0], [1, 63],
+                                            max_speed * 20)
         elif alpha > 0:
             alpha_lerp = self.bezier_interp(alpha, [0, 2], [64, 127],
-                                            max_speed)
+                                            max_speed * 20)
         else:
             alpha_lerp = 63
 
         if beta < 0:
             beta_lerp = self.bezier_interp(beta, [-2, 0], [128, 192],
-                                           max_speed)
+                                           max_speed * 20)
         elif beta > 0:
-            beta_lerp = self.bezier_interp(beta, [0, 2], [193, 255], max_speed)
+            beta_lerp = self.bezier_interp(beta, [0, 2], [193, 255],
+                                           max_speed * 20)
         else:
             beta_lerp = 192
             #  alpha_lerp = self.bezier_interp(alpha, [127, 1], max_speed)
