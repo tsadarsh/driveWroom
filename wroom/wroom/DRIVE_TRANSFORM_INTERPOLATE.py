@@ -6,7 +6,7 @@ def affine_tranform(joy):
 	input_s = np.array([joy.axes[0], joy.axes[1], 1])
 	tfm = np.array([[1, 62.5, 64],[0.5, 62.5, 192.5],[0,0,1]])
 	output_s = np.matmul(input_s, np.transpose(tfm))
-	return output_s[0:2].tolist()
+	return [int(i) for i in output_s[0:2].tolist()]
 
 def simple_alpha_beta(joy):
 	x = joy.axes[0]
