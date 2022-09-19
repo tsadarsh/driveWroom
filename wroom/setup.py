@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'joy_to_drive = wroom.joy_to_drive:main',
+            'sabertooth_serial_comm = wroom.sabertooth_serial_comm:main',
         ],
     },
 )
